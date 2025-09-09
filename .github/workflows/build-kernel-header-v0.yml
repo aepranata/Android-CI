@@ -117,6 +117,12 @@ jobs:
 
           echo "Clone kernel source => ($KERNELREPO)"
 
+      - name: "Clone prima source => (${{ env.KERNELREPO }})"
+        run: |
+          git clone --recursive --depth=1 -j $(nproc) --branch wlan/LA.UM.9.6.4/mithorium/master https://github.com/Mi-Thorium/vendor_qcom_opensource_wlan_prima $KERNELNAME/drivers/staging/prima
+
+          echo "Clone kernel source => ($KERNELREPO)"
+
       - name: "Clone Clang"
         env:
           toolchains: "${{ toJSON(matrix.repos.toolchains) }}"
