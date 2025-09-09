@@ -111,6 +111,12 @@ jobs:
 
           echo "Clone kernel source => ($KERNELREPO)"
 
+      - name: "Clone audio-legacy source => (${{ env.KERNELREPO }})"
+        run: |
+          git clone --recursive --depth=1 -j $(nproc) --branch vince-4.9 https://github.com/Amia-Project/kernel_techpack_audio-legacy $KERNELNAME/techpack/audio-legacy
+
+          echo "Clone kernel source => ($KERNELREPO)"
+
       - name: "Clone Clang"
         env:
           toolchains: "${{ toJSON(matrix.repos.toolchains) }}"
