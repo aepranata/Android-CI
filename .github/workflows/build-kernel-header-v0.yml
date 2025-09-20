@@ -117,6 +117,10 @@ jobs:
 
           echo "Clone kernel source => ($KERNELREPO)"
 
+      - name: "Clone tinanium-module source => (${{ env.KERNELREPO }})"
+        run: |
+          git clone --recursive --depth=1 -j $(nproc) --branch k4.9 https://github.com/needAlt/techpack_xiaomi-titanium $KERNELNAME/techpack/xiaomi-titanium
+
       - name: "Clone prima source => (${{ env.KERNELREPO }})"
         run: |
           git clone --recursive --depth=1 -j $(nproc) --branch wlan/LA.UM.9.6.4/mithorium/master https://github.com/Mi-Thorium/vendor_qcom_opensource_wlan_prima $KERNELNAME/drivers/staging/prima
@@ -255,16 +259,6 @@ jobs:
           if-no-files-found: ignore
           retention-days: 7
 
-      - name: "Upload dtb"
-        uses: actions/upload-artifact@v4
-        env:
-          arch: ${{ steps.generate-args.outputs.ARCH }}
-        with:
-          name: msm8953-qrd-sku3-vince.dtb
-          path: ${{ env.OUT_DIR }}/arch/arm64/boot/dts/qcom/msm8953-qrd-sku3-vince.dtb
-          if-no-files-found: ignore
-          retention-days: 7
-
       - name: "Pack AnyKernel3.zip"
         if: ${{ env.useAnykernel == 'true' }}
         env:
@@ -275,12 +269,6 @@ jobs:
 
           if [ -e "${{ env.OUT_DIR }}/arch/${{ env.arch }}/boot/Image.gz-dtb" ]; then
             cp -f ${{ env.OUT_DIR }}/arch/${{ env.arch }}/boot/Image.gz-dtb ./AnyKernel3/
-          fi
-          if [ -e "${{ env.OUT_DIR }}/arch/${{ env.arch }}/boot/Image" ]; then
-            cp -f ${{ env.OUT_DIR }}/arch/${{ env.arch }}/boot/Image ./AnyKernel3/
-          fi
-          if [ -e "${{ env.OUT_DIR }}/arch/${{ env.arch }}/boot/dts/qcom/*.dtb" ]; then
-            cp -f ${{ env.OUT_DIR }}/arch/${{ env.arch }}/boot/dts/qcom/*.dtb ./AnyKernel3/
           fi
           
           cd AnyKernel3/
