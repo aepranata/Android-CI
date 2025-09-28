@@ -21,7 +21,7 @@ on:
       kernelname:
           description: 'Kernel name'
           required: true
-          default: 'Nightcord-at25'
+          default: 'NeedAlt'
       kernelrepo:
           description: 'Kernel source link'
           required: true
@@ -110,16 +110,6 @@ jobs:
           git clone --recursive --depth=1 -j $(nproc) --branch $KERNELBRANCH $KERNELREPO $KERNELNAME
 
           echo "Clone kernel source => ($KERNELREPO)"
-
-      - name: "Clone audio-legacy source => (${{ env.KERNELREPO }})"
-        run: |
-          git clone --recursive --depth=1 -j $(nproc) --branch audio-4.9 https://github.com/needAlt/kernel_techpack_audio-legacy $KERNELNAME/techpack/audio-legacy
-
-          echo "Clone kernel source => ($KERNELREPO)"
-
-      - name: "Clone tinanium-module source => (${{ env.KERNELREPO }})"
-        run: |
-          git clone --recursive --depth=1 -j $(nproc) --branch k4.9 https://github.com/needAlt/techpack_xiaomi-titanium $KERNELNAME/techpack/xiaomi-titanium
 
       - name: "Clone prima source => (${{ env.KERNELREPO }})"
         run: |
