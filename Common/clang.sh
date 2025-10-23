@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-git clone --recursive --depth=1 https://github.com/KanariaAlt/tc-build $(pwd)/llvmTC -b main
+git clone --recursive --depth=1 https://github.com/aepranata/tc-build $(pwd)/llvmTC -b main
 cd $(pwd)/llvmTC
 
 bash ci.sh deps
@@ -36,7 +36,7 @@ chmod +x build-llvm.py
     --quiet-cmake \
     --shallow-clone \
     --targets ARM AArch64 X86 \
-    --ref "release/18.x" \
+    --ref "release/21.x" \
     --vendor-string "$LLVM_NAME" 2>&1 | tee build.log
 
 # Check if the final clang binary exists or not.
@@ -68,7 +68,7 @@ for bin in $(find install -mindepth 2 -maxdepth 3 -type f -exec file {} \; | gre
 done
 
 # Git config
-wget https://raw.githubusercontent.com/KanariaAlt/Android-CI/main/Common/Git-Config.sh
+wget https://raw.githubusercontent.com/aepranata/Android-CI/main/Common/Git-Config.sh
 bash Git-Config.sh
 
 # Release Info
@@ -83,7 +83,7 @@ clang_version="$(install/bin/clang --version | head -n1 | cut -d' ' -f4)"
 
 # Push to GitHub
 # Update Git repository
-git clone "https://KanariaAlt:$GH_TOKEN@github.com/KanariaAlt/Nightcord_Clang" rel_repo
+git clone "https://aepranata:$GH_TOKEN@github.com/aepranata/atiga-clang" rel_repo
 pushd rel_repo || exit
 rm -fr ./*
 cp -r ../install/* .
@@ -107,6 +107,6 @@ git commit -asm "Nightcord: Update to $rel_date build
 LLVM commit: $llvm_commit_url
 Clang Version: $clang_version
 Binutils version: $binutils_ver
-Builder commit: https://github.com/KanariaAlt/Nightcord_Clang/commit/$builder_commit"
+Builder commit: https://github.com/aepranata/atiga-clang/commit/$builder_commit"
 git push 
 popd || exit
