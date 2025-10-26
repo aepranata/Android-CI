@@ -36,11 +36,11 @@ chmod +x build-llvm.py
     --quiet-cmake \
     --shallow-clone \
     --targets ARM AArch64 X86 \
-    --ref "release/21.x" \
+    --ref "release/20.x" \
     --vendor-string "$LLVM_NAME" 2>&1 | tee build.log
 
 # Check if the final clang binary exists or not.
-[ ! -f install/bin/clang-1* ] && {
+[ ! -f install/bin/clang-2* ] && {
 	err "Building LLVM failed ! Kindly check errors !!"
 	err "build.log" "Error Log"
 	exit 1
