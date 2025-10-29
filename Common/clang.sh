@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+#export dir_clang=$(pwd)/aosp
+#git clone --single-branch --depth=1 https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86.git -b android-16.0.0_r1 $dir_clang
+#export PATH="$dir_clang/r547379/bin:$PATH"
 git clone --recursive --depth=1 https://github.com/aepranata/tc-build $(pwd)/llvmTC -b main
 cd $(pwd)/llvmTC
 
@@ -32,6 +35,7 @@ msg "Building LLVM's ..."
 chmod +x build-llvm.py
 ./build-llvm.py \
     --defines LLVM_PARALLEL_COMPILE_JOBS="$(nproc)" LLVM_PARALLEL_LINK_JOBS="$(nproc)" CMAKE_C_FLAGS=-O3 CMAKE_CXX_FLAGS=-O3 \
+    --full-toolchain \
     --install-folder "$install" \
     --quiet-cmake \
     --shallow-clone \
